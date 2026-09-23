@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--
+صفاء v5.1 — واجهة الإضافة (عربي فقط)
+التحكم: نوع الخط، حجم الخط، ارتفاع السطر، خلفية الواجهة، عرض الردود (أزرار + شريط)، إخفاء التذييل،
+الإملاء الصوتي (تفعيل افتراضي + لغة + نسخ تلقائي)، والأدوات الإضافية: الاتجاه التلقائي.
+(v4.7: حُذف شريط تقدم القراءة وتمييز الجملة نهائياً)
+(v5.0: حُذف مؤقت الجلسة نهائياً — نفس التقرير)
+-->
+<html dir="rtl" lang="ar">
+<head>
+  <title>صفاء</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      width: 300px;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .control { margin-bottom: 14px; }
+    label { display: block; margin-bottom: 5px; font-size: 13px; }
+    input[type="range"], select, button { width: 100%; box-sizing: border-box; }
+    h4 { text-align: center; margin: 0 0 10px 0; }
+    /* v4.7: اسم الإضافة الجديد «صفاء» */
+    .app-name { text-align: center; margin: 0 0 2px 0; font-size: 20px; font-weight: 700; }
+    .app-sub { text-align: center; margin: 0 0 12px 0; font-size: 12px; color: #666; }
+    hr { border: 0; border-top: 1px solid #ccc; margin: 16px 0; }
+
+    /* قائمة المواقع المخصصة */
+    #sitesList {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 130px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+    }
+    #sitesList li {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 8px;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+    }
+    #sitesList li:last-child { border-bottom: none; }
+    #sitesList button { width: auto; font-size: 12px; padding: 3px 10px; }
+
+    /* أزرار خلفية الواجهة وعرض الرد */
+    .bg-btn, .width-btn {
+      flex: 1;
+      padding: 7px 4px;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid #bbb;
+      border-radius: 6px;
+      background: #f2f2f2;
+    }
+    .bg-btn.active, .width-btn.active {
+      outline: 2px solid #1a73e8;
+      outline-offset: 1px;
+      font-weight: bold;
+    }
+
+    /* v2.7: شريط ضبط العرض الدقيق */
+    .slider-row { margin-top: 4px; }
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .slider-head label { margin-bottom: 0; font-size: 12px; color: #555; }
+    .slider-head output { font-size: 12px; font-weight: bold; }
+
+    /* v3.1: قسم الإملاء الصوتي — بطاقة بمفتاح تبديل وقائمة لغة */
+    .group.card {
+      border: 1px solid #e3e3e3;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .toggle-texts { display: flex; flex-direction: column; }
+    .toggle-label { font-size: 13px; font-weight: 600; }
+    .toggle-hint { font-size: 11px; color: #777; margin-top: 2px; }
+    .switch {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 38px;
+      height: 22px;
+      border-radius: 999px;
+      background: #ccc;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin: 0;
+      transition: background 0.2s;
+    }
+    .switch::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      inset-inline-start: 2px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform 0.2s;
+    }
+    .switch:checked { background: #1a73e8; }
+    .switch:checked::before { transform: translateX(-16px); } /* RTL: يتحرك يساراً */
+    .select-wrap .field-label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+    }
+    .voice-options[hidden] { display: none; }
+  </style>
+</head>
+<body>
+  <h1 class="app-name">صفاء</h1>
+  <p class="app-sub">محسّن واجهات الذكاء الاصطناعي</p>
+
+  <!-- حجم الخط -->
+  <div class="control">
+    <label for="fontSize">حجم الخط: <span id="fontSizeValue">16</span>px</label>
+    <input type="range" id="fontSize" min="10" max="40" step="1" value="16">
+  </div>
+
+  <!-- ارتفاع السطر -->
+  <div class="control">
+    <label for="lineHeight">ارتفاع السطر: <span id="lineHeightValue">1.75</span></label>
+    <input type="range" id="lineHeight" min="1.5" max="2.0" step="0.05" value="1.75">
+  </div>
+
+  <!-- نوع الخط -->
+  <div class="control">
+    <label for="fontFamily">نوع الخط:</label>
+    <select id="fontFamily"></select>
+  </div>
+
+  <!-- خلفية الواجهة -->
+  <div class="control">
+    <label>خلفية الواجهة:</label>
+    <div style="display:flex; gap:5px;">
+      <button data-bg="default" class="bg-btn active">افتراضي</button>
+      <button data-bg="warm-light" class="bg-btn">فاتح دافئ</button>
+      <button data-bg="comfort-dark" class="bg-btn">داكن مريح</button>
+    </div>
+  </div>
+
+  <!-- عرض نافذة الرد: أزرار سريعة + شريط ضبط دقيق (v2.7) -->
+  <div class="control">
+    <label>عرض نافذة الرد:</label>
+    <div style="display:flex; gap:5px; margin-bottom:8px;">
+      <button data-width="comfort" class="width-btn">مريح</button>
+      <button data-width="medium" class="width-btn active">متوسط</button>
+      <button data-width="wide" class="width-btn">عريض</button>
+    </div>
+    <div class="slider-row">
+      <div class="slider-head">
+        <label for="widthSlider">ضبط دقيق</label>
+        <output id="widthValue">1000px</output>
+      </div>
+      <input type="range" id="widthSlider"
+             min="760" max="1600" step="20" value="1000">
+    </div>
+  </div>
+
+  <!-- إخفاء نص التذييل -->
+  <div class="control">
+    <label>
+      <input type="checkbox" id="hideFooter"> إخفاء نص التذييل
+    </label>
+  </div>
+
+  <!-- الإملاء الصوتي (v3.1) -->
+  <section class="group card" aria-label="الإملاء الصوتي">
+    <div class="toggle-row">
+      <span class="toggle-texts">
+        <span class="toggle-label">الإملاء الصوتي</span>
+        <span class="toggle-hint">زر ميكروفون في حقل الإدخال</span>
+      </span>
+      <input type="checkbox" id="tg-voice" class="switch" role="switch" 
+             aria-label="الإملاء الصوتي" />
+    </div>
+    
+    <div class="voice-options" id="voice-options" hidden>
+      <div class="select-wrap" style="margin-top: 12px;">
+        <label class="field-label" for="voice-language">لغة الإملاء</label>
+        <select id="voice-language">
+          <option value="ar-SA">العربية (السعودية)</option>
+          <option value="de-DE">الألمانية</option>
+          <option value="en-US">الإنجليزية (أمريكا)</option>
+          <option value="fr-FR">الفرنسية</option>
+          <option value="es-ES">الإسبانية</option>
+          <option value="tr-TR">التركية</option>
+        </select>
+      </div>
+
+      <div class="toggle-row" style="margin-top: 10px;">
+        <span class="toggle-texts">
+          <span class="toggle-label">نسخ النص تلقائياً</span>
+          <span class="toggle-hint">إلى الحافظة بعد التوقف</span>
+        </span>
+        <input type="checkbox" id="tg-voice-copy" class="switch" role="switch" 
+               aria-label="نسخ النص تلقائياً" />
+      </div>
+    </div>
+  </section>
+
+  <!-- الأدوات الإضافية (v4.0 — v5.0: الاتجاه التلقائي فقط) -->
+  <section class="group card" aria-label="الأدوات الإضافية">
+    <div class="toggle-row">
+      <span class="toggle-texts">
+        <span class="toggle-label">الاتجاه التلقائي</span>
+        <span class="toggle-hint">RTL/LTR حسب النص</span>
+      </span>
+      <input type="checkbox" id="tg-bidi" class="switch" role="switch" />
+    </div>
+  </section>
+
+  <!-- إعادة الضبط -->
+  <button id="resetButton">إعادة الضبط لهذا الموقع</button>
+
+  <hr>
+
+  <!-- المواقع المخصصة -->
+  <h4>المواقع المخصصة</h4>
+  <ul id="sitesList"></ul>
+
+  <!-- v3.2: طبقة الإعدادات المشتركة قبل popup.js (نفس الترتيب في manifest) -->
+  <script src="lib/settings-schema.js"></script>
+  <script src="lib/storage.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

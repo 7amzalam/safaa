@@ -1,0 +1,99 @@
+{
+  "manifest_version": 3,
+  "name": "صفاء — محسّن واجهات الذكاء الاصطناعي",
+  "short_name": "صفاء",
+  "version": "5.1",
+  "description": "تخصيص واجهات منصات الذكاء الاصطناعي: خطوط عربية، إملاء صوتي، ألوان مريحة للعين، ومساعدات قراءة.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": [
+        "content/adapters/gemini.js",
+        "content/adapters/deepseek.js",
+        "content/adapters/zai.js",
+        "content/features/voice-input.js",
+        "content/features/auto-bidi.js",
+        "lib/settings-schema.js",
+        "lib/storage.js",
+        "content.js"
+      ],
+      "css": ["fonts.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.deepseek.com/*"],
+      "js": [
+        "content/adapters/gemini.js",
+        "content/adapters/deepseek.js",
+        "content/adapters/zai.js",
+        "content/features/voice-input.js",
+        "content/features/auto-bidi.js",
+        "lib/settings-schema.js",
+        "lib/storage.js",
+        "content.js"
+      ],
+      "css": ["fonts.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chat.qwen.ai/*"],
+      "js": [
+        "content/adapters/gemini.js",
+        "content/adapters/deepseek.js",
+        "content/adapters/zai.js",
+        "content/features/voice-input.js",
+        "content/features/auto-bidi.js",
+        "lib/settings-schema.js",
+        "lib/storage.js",
+        "content.js"
+      ],
+      "css": ["fonts.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.z.ai/*"],
+      "js": [
+        "content/adapters/gemini.js",
+        "content/adapters/deepseek.js",
+        "content/adapters/zai.js",
+        "content/features/voice-input.js",
+        "content/features/auto-bidi.js",
+        "lib/settings-schema.js",
+        "lib/storage.js",
+        "content.js"
+      ],
+      "css": ["fonts.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*.woff2"],
+      "matches": [
+        "https://gemini.google.com/*",
+        "https://*.deepseek.com/*",
+        "https://chat.qwen.ai/*",
+        "https://*.z.ai/*"
+      ]
+    }
+  ]
+}
