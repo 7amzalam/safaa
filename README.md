@@ -1,51 +1,44 @@
+# Safaa
 
-````markdown
-# صفاء
+A free Chrome extension that enhances the readability of Arabic responses across AI platforms: Gemini, DeepSeek, Qwen, and Z.ai.
 
-إضافة كروم مجانية تحسّن قراءة الردود العربية في مواقع الذكاء الاصطناعي:
-Gemini وDeepSeek وQwen وZ.ai.
+Instead of settling for default site fonts and widths, Safaa provides clear Arabic fonts, comfortable backgrounds, and adjustable layouts—all from a single compact popup window.
 
-بدل الاكتفاء بخط الموقع وعرضه الافتراضي، تمنحك صفاء خطوطاً عربية واضحة
-وخلفيات مريحة وعرضاً قابلًا للضبط — كل ذلك من نافذة واحدة صغيرة.
+## Features
 
-## المميزات
+**Ready-to-Use Arabic Fonts**: Four embedded typefaces (Readex Pro, IBM Plex Sans Arabic, Tajawal, Cairo) with full control over font size and line height.
 
-- **خطوط عربية جاهزة**: أربعة خطوط مضمّنة داخل الإضافة (Readex Pro،
-  IBM Plex Sans Arabic، Tajawal، Cairo) مع التحكم في حجم الخط وارتفاع السطر.
-- **ثلاث خلفيات**: الافتراضي، فاتح دافئ، داكن مريح — تُطبَّق على كامل الصفحة بألوان متناسقة.
-- **عرض الردود**: توسيع نافذة الردود بأزرار جاهزة أو شريط ضبط دقيق.
-- **إخفاء التذييل**: إخفاء نص إخلاء المسؤولية أسفل الصفحة.
-- **إملاء صوتي**: زر ميكروفون في حقل الإدخال في DeepSeek وZ.ai يحوّل كلامك
-  إلى نص مباشرة، بست لغات، مع خيار نسخ النص تلقائياً للحافظة.
-- **اتجاه تلقائي**: الفقرة العربية تظهر من اليمين والفقرة الإنجليزية من اليسار
-  في نفس الرد، دون أي إعداد.
-- **إعدادات لكل موقع**: كل تعديل يُحفظ لذلك الموقع وحده ويتزامن بين أجهزتك.
+**Three Background Themes**: Default, Warm Light, and Comfortable Dark—applied smoothly across the entire page with harmonious color palettes.
 
-الإضافة خفيفة: لا تعمل إلا في المواقع الأربعة المدعومة ولا تلمس أي موقع آخر،
-ولا تُحمّل الخط إلا عند استخدامه فعلاً.
+**Response Width Control**: Easily expand response containers using quick action buttons or a precise slider.
 
-## التثبيت
+**Footer Hiding**: Cleanly hides the disclaimer text at the bottom of the page.
 
-1. فك ضغط الملف المُحمَّل.
-2. افتح `chrome://extensions` (يعمل أيضاً على Edge وBrave وOpera).
-3. فعّل وضع المطوّر من الزاوية العلوية.
-4. اضغط **Load unpacked** واختر المجلد الذي يوجد فيه `manifest.json` مباشرة.
+**Voice Dictation**: A microphone button integrated into the input fields of DeepSeek and Z.ai that converts your speech directly into text across six languages, with an automatic clipboard copy option.
 
-إن ظهر خطأ "Manifest file is missing" فغالباً اخترت المجلد الأب —
-ادخل إلى المجلد الداخلي واختره.
+**Automatic Text Direction**: Arabic paragraphs render right-to-left while English paragraphs render left-to-right within the same response automatically, without any manual configuration.
 
-## الاستخدام
+**Per-Site Settings**: Every customization is saved independently for each platform and syncs seamlessly across your devices.
 
-1. افتح أحد المواقع المدعومة واطرح سؤالاً.
-2. اضغط أيقونة صفاء في شريط الأدوات.
-3. اختر الخط وعدّل الحجم والخلفية والعرض — كل تغيير يظهر مباشرة ويُحفظ للموقع.
+*Lightweight Design:* The extension runs exclusively on the four supported platforms without interfering with any other sites, and loads fonts only when actively in use.
 
-زر الميكروفون جاهز في DeepSeek وZ.ai من أول لحظة بعد التثبيت:
-اضغطه واسمح بالمايكروفون مرة واحدة ثم تحدّث، والنص يُضاف إلى حقل الإدخال
-وتبقى مراجعته قبل الإرسال لك. من نافذة الإضافة يمكنك تغيير لغة الإملاء
-أو إيقاف الميزة.
+## Installation
 
-## الترخيص
+1. Extract the downloaded archive.
+2. Open `chrome://extensions` (also works on Edge, Brave, and Opera).
+3. Enable **Developer mode** using the toggle in the top-right corner.
+4. Click **Load unpacked** and select the folder containing `manifest.json` directly.
 
-الكود مرخّص تحت رخصة MIT (انظر `LICENSE`)، والخطوط تحت رخصة SIL Open Font License.
-````
+*If a "Manifest file is missing" error appears, you likely selected the parent directory—open the inner folder and select it instead.*
+
+## Usage
+
+1. Open any of the supported websites and submit a prompt.
+2. Click the Safaa icon in your browser toolbar.
+3. Select your font, adjust size, background, and width—every change applies instantly and saves per-site.
+
+*The microphone button is ready in DeepSeek and Z.ai right after installation:* Click it, grant microphone permission once, and speak; the text is transcribed directly into the input field for your review before sending. You can change the dictation language or disable the feature from the extension popup.
+
+## License
+
+The code is licensed under the MIT License (see `LICENSE`), and the fonts are licensed under the SIL Open Font License.
